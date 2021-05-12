@@ -1,1 +1,1 @@
-# QUORIDOR en Javam,offline
+# QUORIDOR en Java, offline
