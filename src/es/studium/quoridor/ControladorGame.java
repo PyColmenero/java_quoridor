@@ -31,10 +31,10 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 		this.vistaGame.addWindowListener(this);
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		VistaGame vistaGame = new VistaGame("Player1", "Player2");
 		new ControladorGame(vistaGame, null, "Player1", "Player2"); 
-	}
+	}*/
 	
 	
 	
