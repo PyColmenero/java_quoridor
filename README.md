@@ -1,1 +1,1 @@
-# java_quoridor
+# QUORIDOR en Javam,offline
