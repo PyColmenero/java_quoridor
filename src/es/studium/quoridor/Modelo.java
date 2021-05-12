@@ -24,36 +24,31 @@ public class Modelo extends Connections {
 	 */
 	public int correctNames(String name1, String name2) {
 
-		// nombres iguales
-		if (name1.equals(name2)) {
-			return ERROR_EQUALS;
-		} else {
-			
-			// nombres con longitud no permitida
-			if (name1.length() >= 3 && name1.length() <= 45) {
-				Pattern pattern = Pattern.compile("[a-zA-Z0-9/_/.]+");
-				Matcher matcher = pattern.matcher(name1);
+		// nombres con longitud no permitida
+		
+		if (name1.length() >= 3 && name1.length() <= 45 && name2.length() >= 3 && name2.length() <= 45) {
+			// nombres !iguales
+			if ( !name1.equals(name2) ) {
+				Pattern pattern1 = Pattern.compile("[a-zA-Z0-9/_/.]+");
+				Matcher matcher1 = pattern1.matcher(name1);
 				// carácteres no permitidos
-				if (!matcher.matches()) {
+				if (!matcher1.matches()) {
 					return ERROR_CHAR;
 				}
-			} else {
-				return ERROR_LENGTH;
-			}
-			
-			// nombres con longitud no permitida
-			if (name2.length() >= 3 && name2.length() <= 45) {
-				Pattern pattern = Pattern.compile("[a-zA-Z0-9/_/.]+");
-				Matcher matcher = pattern.matcher(name2);
+				
+				Pattern pattern2 = Pattern.compile("[a-zA-Z0-9/_/.]+");
+				Matcher matcher2 = pattern2.matcher(name2);
 				// carácteres no permitidos
-				if (matcher.matches()) {
+				if (matcher2.matches()) {
 					return GOOD;
 				} else {
 					return ERROR_CHAR;
 				}
 			} else {
-				return ERROR_LENGTH;
+				return ERROR_EQUALS;
 			}
+		} else {
+			return ERROR_LENGTH;
 		}
 	}
 
