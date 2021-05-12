@@ -12,7 +12,7 @@ public class ControladorTop10 implements ActionListener, WindowListener {
 	public ControladorTop10(VistaTop10 vistaTop10, Modelo modelo) {
 		
 		this.vistaTop10 = vistaTop10;
-		this.vistaTop10.ventana.addWindowListener(this);
+		this.vistaTop10.addWindowListener(this);
 		
 		// cargamos el TOP10 en una JTable
 		modelo.add_top10(vistaTop10);
@@ -30,7 +30,7 @@ public class ControladorTop10 implements ActionListener, WindowListener {
 	public void windowClosing(WindowEvent e) {
 		
 		// cerramos esta ventana
-		vistaTop10.ventana.setVisible(false);
+		vistaTop10.setVisible(false);
 	}
 
 	@Override

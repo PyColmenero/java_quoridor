@@ -16,6 +16,12 @@ public class Modelo extends Connections {
 	static int ERROR_CHAR = 1;
 	static int ERROR_EQUALS = 3;
 	
+	/**
+	 * se encarga de corregir los nombres de los jugadores
+	 * @param name1
+	 * @param name2
+	 * @return
+	 */
 	public int correctNames(String name1, String name2) {
 
 		// nombres iguales
@@ -25,7 +31,7 @@ public class Modelo extends Connections {
 			
 			// nombres con longitud no permitida
 			if (name1.length() >= 3 && name1.length() <= 45) {
-				Pattern pattern = Pattern.compile("[a-zA-Z0-9/_]+");
+				Pattern pattern = Pattern.compile("[a-zA-Z0-9/_/.]+");
 				Matcher matcher = pattern.matcher(name1);
 				// carácteres no permitidos
 				if (!matcher.matches()) {
@@ -56,6 +62,10 @@ public class Modelo extends Connections {
 	String[][] data = new String[10][4];
 	JScrollPane scrollPanel;
 	
+	/**
+	 * hace una conexion con la base de datos para traer las 10 mejores partidas y así añadirlas a la tabla
+	 * @param top10
+	 */
 	public void add_top10(VistaTop10 top10) {
 
 		String sentence;
@@ -91,7 +101,7 @@ public class Modelo extends Connections {
 		scrollPanel.setPreferredSize(new Dimension(300, 220));
 
 		top10.lbl_loading.setVisible(false);
-		top10.ventana.add(scrollPanel);
+		top10.add(scrollPanel);
 	}
 
 }
