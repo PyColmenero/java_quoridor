@@ -29,7 +29,7 @@ public class ControladorMain implements ActionListener, WindowListener {
 		if (vistaMain.bnt_play.equals(e.getSource())) {
 
 			// CREO OTRO MVC para elegir nombre de los jugadores
-			VistaNames vistaNames = new VistaNames("PyColmenero", "CandyCruck");
+			VistaNames vistaNames = new VistaNames("", "");
 			new ControladorNames(vistaNames, modelo);
 			// Quito la Ventana MAIN
 			vistaMain.ventana.setVisible(false);
