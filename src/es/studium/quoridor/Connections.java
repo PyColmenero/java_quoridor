@@ -18,6 +18,9 @@ public class Connections {
     ResultSet rs = null;
     Connection connection = null;
 
+    /**
+	 * abre la conexion a la base de datos
+	 */
 	public Connection connect() {
 		
 		Connection connection = null;
@@ -42,6 +45,9 @@ public class Connections {
 		return connection;
 	}
 	
+	/**
+	 * cierra la conexion a la base de datos
+	 */
 	public void closeConnection()
 	{
 		try {

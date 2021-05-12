@@ -1,6 +1,5 @@
 package es.studium.quoridor;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Interpolate {
@@ -30,6 +29,9 @@ public class Interpolate {
 		this.mc = mc;
 	}
 
+	/**
+	 * calcular los ejes X e Y del punto inicial y final de la interpolación del jugador
+	 */
 	void get_initlast_interpolate_players() {
 		mode = INTERPOLATE_PLAYER;
 		last_turn = mc.turn;
@@ -57,7 +59,9 @@ public class Interpolate {
 
 		status = true;
 	}
-	
+	/**
+	 * calcular los ejes X e Y del punto inicial y final de la interpolación de la pared
+	 */
 	public void get_initlast_interpolate_walls() {
 
 		mode = INTERPOLATE_WALLS;

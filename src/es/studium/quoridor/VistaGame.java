@@ -70,10 +70,17 @@ public class VistaGame extends JFrame {
 		dlg_gameover.setVisible(false);
 	}
 
+	/**
+	 * Cambiar el label del turno
+	 * @param name
+	 */
 	public void change_turn(String name) {
 		lbl_turn.setText("Turno de " + name);
 	}
-
+	/**
+	 * cambiar el label de error
+	 * @param error
+	 */
 	public void error(String error) {
 		lbl_error.setText(error);
 		reload_frame();
@@ -89,6 +96,11 @@ public class VistaGame extends JFrame {
         resize = !resize;
 	}
 
+	/**
+	 * enseña un dialog de quien ha ganado y las estadísticas de la partidas
+	 * @param player1
+	 * @param player2
+	 */
 	public void game_over(Player player1, Player player2) {
 		// titulo de ganador
 		dlg_lbl_title.setText("¡" + player1.getName() + " ha ganado!");

@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 
 public class VistaTop10 extends JFrame{
 
+	private static final long serialVersionUID = 1L;
+
 	Image icon = Toolkit.getDefaultToolkit().getImage("./logo.png");
 
 	//JFrame ventana = new JFrame("QUORIDOR");
