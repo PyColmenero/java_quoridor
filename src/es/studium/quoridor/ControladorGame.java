@@ -11,6 +11,7 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 
 	private VistaGame vistaGame;
 	private Modelo modelo;
+	private ModeloGame modeloGame;
 	
 	String name1;
 	String name2;
@@ -21,8 +22,12 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 		this.modelo = modelo;
 		this.name1 = name1;
 		this.name2 = name2;
+		
+		
+		modeloGame = new ModeloGame(name1, name2, vistaGame);
+		vistaGame.build(modeloGame, name1, name2);
 				
-		this.vistaGame.canvas.addMouseListener(this);
+		this.vistaGame.addMouseListener(this);
 		this.vistaGame.btn_help.addActionListener(this);
 		this.vistaGame.btn_undo.addActionListener(this);
 		this.vistaGame.btn_end.addActionListener(this);
@@ -32,7 +37,7 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 	}
 	
 	/*public static void main(String[] args) {
-		VistaGame vistaGame = new VistaGame("Player1", "Player2");
+		VistaGame vistaGame = new VistaGame();
 		new ControladorGame(vistaGame, null, "Player1", "Player2"); 
 	}*/
 	
@@ -44,7 +49,7 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 		// botón de UNDO
 		if(vistaGame.btn_undo.equals(e.getSource())) {
 			
-			vistaGame.canvas.undowall();
+			modeloGame.undowall();
 			
 		} else if(vistaGame.dlg_btn_again.equals(e.getSource())) { // botón de JugarOtraVez
 			
@@ -90,7 +95,13 @@ public class ControladorGame implements ActionListener, WindowListener, MouseLis
 	public void windowDeactivated(WindowEvent e) {}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		vistaGame.canvas.click(e.getX(), e.getY());
+		modeloGame.click(e.getX(), e.getY());
+		modeloGame.detect_click_position();
+		modeloGame.repaint();
+		
+		
+		vistaGame.update_labels(modeloGame.getData());
+		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {}

@@ -107,6 +107,7 @@ public class Interpolate {
 	 */
 	public void interpolate(Graphics g) {
 
+		
 		// System.out.println(interpolate_x_init + ":" + interpolate_y_init);
 		// System.out.println(interpolate_x_last + ":" + interpolate_y_last);
 
@@ -147,6 +148,9 @@ public class Interpolate {
 			}
 
 			interpolate_index++;
+			
+			mc.repaint();
+			
 
 		} else {
 
@@ -154,6 +158,7 @@ public class Interpolate {
 			status = false;
 			
 		}
+		
 		mc.repaint();
 	}
 	

@@ -23,10 +23,10 @@ public class ModeloGame extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	Connections con = new Connections();
-	VistaGame vistaGame;
 	Player players[] = new Player[2];
 	Interpolate interpolate = new Interpolate(this);
-
+	VistaGame vg;
+	
 	int turn = 0;
 	boolean clicked = false;
 	int x_click;
@@ -99,14 +99,14 @@ public class ModeloGame extends JPanel {
 	static boolean MOVE_HACK = false;
 	static boolean WIN = false;
 	boolean game_status = true;
+	String error = "";
 
 	public ModeloGame(String name1, String name2, VistaGame vistaGame) {
 		// dar tamaño y fondo
 		this.setBackground(Color.black);
 		this.setSize(TABLE_WIDTH, TABLE_HEIGHT);
 
-		// vista del Juego
-		this.vistaGame = vistaGame;
+		vg = vistaGame;
 		
 		// instanciar los jugadores
 		players[0] = new Player(name1, 9, 17, new Color(159, 54, 255), 10, 0);
@@ -126,7 +126,7 @@ public class ModeloGame extends JPanel {
 
 
 	public void paint(Graphics g) {
-
+		
 		draw_background_table(g);
 
 		// Titulo
@@ -135,11 +135,6 @@ public class ModeloGame extends JPanel {
 		// Dibujar la maya de bloques
 		draw_maya(g);
 
-		// Detectar CLICK
-		if (clicked && game_status != WIN) {
-			detect_click_position(g);
-			vistaGame.reload_frame();
-		}
 
 		// ===================== WALLS IN SIDE =====================
 		y_start = LOGO_HEIGHT + TABLE_SIDE + TABLE_WIDTH;
@@ -157,10 +152,10 @@ public class ModeloGame extends JPanel {
 			any_won(g);
 			if (game_status != WIN) {
 				// ===================== MOVIBLE BLOCKS =====================
-				y_start = LOGO_HEIGHT + TABLE_SIDE;
+				
 				detect_posible_blocks(g);
-				vistaGame.change_turn(players[turn].getName());
 				sound();
+				
 			}
 		}
 
@@ -189,10 +184,8 @@ public class ModeloGame extends JPanel {
 		y_start = LOGO_HEIGHT;
 		g.fillRect(0, y_start, TABLE_WIDTH, TABLE_SIDE);
 		g.fillRect(0, TABLE_WIDTH + TABLE_SIDE + y_start, TABLE_WIDTH, TABLE_SIDE);
-		
 	}
 
-	
 	/**
 	 * calcula si algun jugador ha ganado
 	 * @param g
@@ -200,13 +193,13 @@ public class ModeloGame extends JPanel {
 	private void any_won(Graphics g) {
 
 		if (players[0].getY() == 1) {
-			System.out.println("GAME OVER, " + players[0].getName() + " WON");
-			vistaGame.game_over(players[0], players[1]);
+			game_status = WIN;
+			vg.game_over(players[0], players[1]);
 			add_match(players[0]);
 		}
 		if (players[1].getY() == 17) {
-			System.out.println("GAME OVER, " + players[1].getName() + " WON");
-			vistaGame.game_over(players[1], players[0]);
+			game_status = WIN;
+			vg.game_over(players[1], players[0]);
 			add_match(players[1]);
 		}
 
@@ -328,12 +321,23 @@ public class ModeloGame extends JPanel {
 	 * @param y
 	 */
 	public void click(int x, int y) {
-		clicked = true;
-		x_click = x;
-		y_click = y;
-		repaint();
+		if(game_status != WIN) {
+			clicked = true;
+			x_click = x-8;
+			y_click = y-31;
+			System.out.println(x + ": " + y);
+			repaint();
+		}
+		
 	}
 
+	public String[] getData() {
+		repaint();
+		//int current_turn = turn == 0 ? 1 : 0;
+		String[] data = {players[turn].getName(), error, interpolate.status + ""};
+		return data;
+	}
+	
 	/**
 	 * dibuja las paredes no puestas
 	 * @param g
@@ -444,7 +448,7 @@ public class ModeloGame extends JPanel {
 	 * Dadas unas coordenadas de donde se ha hecho click en el canvas. calcula la X
 	 * y la Y de el bloque pulsado, entre 0:0 a 8:8
 	 */
-	private void detect_click_position(Graphics g) {
+	public void detect_click_position() {
 		
 		// le restamos al eje Y, el espacio entre 0 y el comienzo del tablero
 		y_click -= (LOGO_HEIGHT + TABLE_SIDE);
@@ -492,7 +496,7 @@ public class ModeloGame extends JPanel {
 	 * para cambiar la posición del jugafor
 	 */
 	private void move_player() {
-
+		
 		int x_block_pos = ((x_click / WALLBLOCK_WIDTH) * 2) + 1;
 		int y_block_pos = ((y_click / WALLBLOCK_WIDTH) * 2) + 1;
 
@@ -531,11 +535,11 @@ public class ModeloGame extends JPanel {
 			// la ultima accion fue mover un jugador
 			last_type_action = PLAYER;
 			// vaciamos el Label de errores
-			vistaGame.error(" ");
+			error = "";
 
 		} else {
 			last_type_action = -1;
-			vistaGame.error("Posición inválida");
+			error = "Posición Inválida";
 		}
 		
 	}
@@ -570,14 +574,14 @@ public class ModeloGame extends JPanel {
 				// la ultima accion fue mover una pared
 				last_type_action = WALL;
 				// vaciamos el Label de errores
-				vistaGame.error(" ");
+				error = "";
 			} else {
 				last_type_action = -1;
-				vistaGame.error("Pared encima de pared");
+				error = "Pared encima de pared";
 			}
 		} else {
 			last_type_action = -1;
-			vistaGame.error("Fuera del tablero");
+			error = "Fuera del tablero";
 		}
 		
 	}
@@ -614,14 +618,14 @@ public class ModeloGame extends JPanel {
 				// la ultima accion fue mover una pared
 				last_type_action = WALL;
 				// vaciamos el Label de errores
-				vistaGame.error(" ");
+				error = "";
 			} else {
 				last_type_action = -1;
-				vistaGame.error("Pared encima de pared");
+				error = "Pared encima de pared";
 			}
 		} else {
 			last_type_action = -1;
-			vistaGame.error("Fuera del tablero");
+			error = "Fuera del tablero";
 		}
 	}
 
@@ -631,7 +635,7 @@ public class ModeloGame extends JPanel {
 	 */
 	private void sound() {
 
-		System.out.println("Type: " + last_type_action);
+		//System.out.println("Type: " + last_type_action);
 
 		if (last_type_action != -1) {
 
@@ -714,6 +718,8 @@ public class ModeloGame extends JPanel {
 	 */
 	public void detect_posible_blocks(Graphics g) {
 
+		y_start = LOGO_HEIGHT + TABLE_SIDE;
+		
 		erase_posible_walls();
 
 		int own_x = players[turn].getY();

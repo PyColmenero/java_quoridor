@@ -35,7 +35,7 @@ public class ControladorNames implements ActionListener, WindowListener {
 			
 			// si es 0, todo bien
 			if (status == Modelo.GOOD) {
-				VistaGame vistaGame = new VistaGame(name1, name2);
+				VistaGame vistaGame = new VistaGame();
 				new ControladorGame(vistaGame, modelo, name1, name2);
 				vistaNames.ventana.setVisible(false);
 			}

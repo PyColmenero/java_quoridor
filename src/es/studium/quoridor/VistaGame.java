@@ -27,8 +27,6 @@ public class VistaGame extends JFrame {
 	Label lbl_error = new Label(" ");
 	Panel pnl_data = new Panel();
 
-	ModeloGame canvas;
-
 	String[] columnNames = { "Nombre", "Movimientos", "Paredes" };
 
 	Dialog dlg_gameover = new Dialog(this);
@@ -37,23 +35,11 @@ public class VistaGame extends JFrame {
 	Button dlg_btn_again = new Button("Jugar otra vez");
 	Button dlg_btn_close = new Button("Cerrar");
 
-	public VistaGame(String name1, String name2) {
+	public VistaGame() {
 
-		this.setTitle("QUORIDOR");
 		this.setIconImage(icon);
 		this.setLayout(new FlowLayout());
-
-		canvas = new ModeloGame(name1, name2, this);
-		canvas.setPreferredSize(new Dimension(550, 900));
-		this.add(canvas);
-		pnl_data.add(btn_help);
-		pnl_data.add(btn_end);
-		pnl_data.add(btn_undo);
-		pnl_data.add(lbl_turn);
-		pnl_data.add(lbl_error);
-
-		pnl_data.setPreferredSize(new Dimension(550, 100));
-		this.add(pnl_data);
+		
 		
 		this.setSize(565, 1000);
 		this.setResizable(true);
@@ -70,21 +56,8 @@ public class VistaGame extends JFrame {
 		dlg_gameover.setVisible(false);
 	}
 
-	/**
-	 * Cambiar el label del turno
-	 * @param name
-	 */
-	public void change_turn(String name) {
-		lbl_turn.setText("Turno de " + name);
-	}
-	/**
-	 * cambiar el label de error
-	 * @param error
-	 */
-	public void error(String error) {
-		lbl_error.setText(error);
-		reload_frame();
-	}
+	
+	
 	
 	boolean resize = false;
 	public void reload_frame() {
@@ -118,6 +91,34 @@ public class VistaGame extends JFrame {
 		dlg_gameover.add(dlg_btn_again);
 		dlg_gameover.add(dlg_btn_close);
 		dlg_gameover.setVisible(true);
+	}
+
+	public void update_labels(String[] data) {
+		
+		lbl_turn.setText("Turno de " + data[0]);
+		lbl_error.setText(data[1]);
+		
+		reload_frame();
+		
+	}
+
+	public void build(ModeloGame modeloGame, String name1, String name2) {
+		
+		this.setTitle("QUORIDOR " + name1 + " vs " + name2);
+		
+		this.add(modeloGame);
+		modeloGame.setPreferredSize(new Dimension(550, 900));
+		pnl_data.add(btn_help);
+		pnl_data.add(btn_end);
+		pnl_data.add(btn_undo);
+		lbl_turn.setText("Turno de: " + name1);
+		pnl_data.add(lbl_turn);
+		pnl_data.add(lbl_error);
+
+		pnl_data.setPreferredSize(new Dimension(550, 100));
+		this.add(pnl_data);
+		
+		reload_frame();
 	}
 
 	
